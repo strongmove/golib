@@ -41,7 +41,7 @@ func GetSizeOnDisk(path string) (uint64, error) {
 	return (uint64(high) << 32) + uint64(r1), nil
 }
 
-func testDiskSizesMatch(filePath string) (bool, map[string]uint64) {
+func TestDiskSizesMatch(filePath string) (bool, map[string]uint64) {
 	info, err := os.Stat(filePath)
 	if err != nil {
 		return false, map[string]uint64{}
@@ -64,7 +64,7 @@ func testDiskSizesMatch(filePath string) (bool, map[string]uint64) {
 func GetMismatchedFiles(files []string) []string {
 	var mismatches []string
 	for _, file := range files {
-		match, _ := testDiskSizesMatch(file)
+		match, _ := TestDiskSizesMatch(file)
 		if !match {
 			mismatches = append(mismatches, file)
 		}
