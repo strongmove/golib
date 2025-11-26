@@ -73,8 +73,21 @@ func GetMismatchedFiles(files []string) []string {
 	return mismatches
 }
 
-func ParseSize(sizeStr, unit string) int64 {
-	size, _ := strconv.ParseFloat(sizeStr, 64)
+func ParseSize(sizeStr string) int64 {
+	sizeStr = strings.TrimSpace(sizeStr)
+	if len(sizeStr) == 0 {
+		return 0
+	}
+	unit := ""
+	last := sizeStr[len(sizeStr)-1]
+	if last == 'k' || last == 'K' || last == 'm' || last == 'M' || last == 'g' || last == 'G' {
+		unit = string(last)
+		sizeStr = sizeStr[:len(sizeStr)-1]
+	}
+	size, err := strconv.ParseFloat(sizeStr, 64)
+	if err != nil {
+		return 0
+	}
 	switch strings.ToLower(unit) {
 	case "k":
 		size *= 1024
