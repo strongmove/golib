@@ -82,7 +82,7 @@ func ParseSize(sizeStr string) int64 {
 	last := sizeStr[len(sizeStr)-1]
 	if last == 'k' || last == 'K' || last == 'm' || last == 'M' || last == 'g' || last == 'G' {
 		unit = string(last)
-		sizeStr = sizeStr[:len(sizeStr)-1]
+		sizeStr = sizeStr[:len(sizeStr)-2]
 	}
 	size, err := strconv.ParseFloat(sizeStr, 64)
 	if err != nil {
