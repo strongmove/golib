@@ -4,6 +4,7 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"syscall"
 	"unsafe"
@@ -70,4 +71,17 @@ func GetMismatchedFiles(files []string) []string {
 		}
 	}
 	return mismatches
+}
+
+func ParseSize(sizeStr, unit string) int64 {
+	size, _ := strconv.ParseFloat(sizeStr, 64)
+	switch strings.ToLower(unit) {
+	case "k":
+		size *= 1024
+	case "m":
+		size *= 1024 * 1024
+	case "g":
+		size *= 1024 * 1024 * 1024
+	}
+	return int64(size)
 }
